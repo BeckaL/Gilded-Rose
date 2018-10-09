@@ -15,6 +15,10 @@ class GildedRose
     end
   end
 
+  def decrease_sell_in(item)
+    item.sell_in -= 1 if item.name != "Sulfuras, Hand of Ragnaros"
+  end
+
   def initial_quality_change(item)
     case item.name
     when "Aged Brie" then aged_brie(item)
@@ -30,10 +34,6 @@ class GildedRose
     return if item.name == "Sulfuras, Hand of Ragnaros"
     item.quality = MIN_QUALITY if item.quality < MIN_QUALITY
     item.quality = MAX_QUALITY if item.quality > MAX_QUALITY
-  end
-
-  def decrease_sell_in(item)
-    item.sell_in -= 1 if item.name != "Sulfuras, Hand of Ragnaros"
   end
 
   def sulfuras(item)
