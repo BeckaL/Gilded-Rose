@@ -1,5 +1,3 @@
-require 'pry'
-
 class GildedRose
 
   MAX_QUALITY = 50
@@ -12,22 +10,26 @@ class GildedRose
   def update_quality
     @items.each do |item|
       decrease_sell_in(item)
-      case item.name
-      when "Aged Brie" then aged_Brie(item)
-      when "Sulfuras, Hand of Ragnaros" then sulfuras(item)
-      when "Backstage passes to a TAFKAL80ETC concert" then backstage_pass(item)
-      when "Conjured item" then conjured_item(item)
-      else other_items(item)
-      end
+      initial_quality_change(item)
       min_max_quality(item)
     end
   end
 
-  def min_max_quality(item)
-    if item.name != "Sulfuras, Hand of Ragnaros"
-      item.quality = MIN_QUALITY if item.quality < MIN_QUALITY
-      item.quality = MAX_QUALITY if item.quality > MAX_QUALITY
+  def initial_quality_change(item)
+    case item.name
+    when "Aged Brie" then aged_brie(item)
+      when "Sulfuras, Hand of Ragnaros" then sulfuras(item)
+      when "Backstage passes to a TAFKAL80ETC concert"
+        backstage_pass(item)
+      when "Conjured item" then conjured_item(item)
+      else other_items(item)
     end
+  end
+
+  def min_max_quality(item)
+    return if item.name == "Sulfuras, Hand of Ragnaros"
+    item.quality = MIN_QUALITY if item.quality < MIN_QUALITY
+    item.quality = MAX_QUALITY if item.quality > MAX_QUALITY
   end
 
   def decrease_sell_in(item)
@@ -37,9 +39,8 @@ class GildedRose
   def sulfuras(item)
   end
 
-  def aged_Brie(item)
-    item.sell_in < 0 ? multiplier = 2 : multiplier = 1
-    item.quality += 1 * multiplier
+  def aged_brie(item)
+    item.sell_in < 0 ? item.quality += 2 : item.quality += 1
   end
 
   def backstage_pass(item)

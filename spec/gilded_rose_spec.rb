@@ -131,13 +131,13 @@ describe GildedRose do
         it 'degrades to 48 when quality is at 50' do
           item = Item.new("Conjured item", 5, 50)
           GildedRose.new([item]).update_quality
-          expect(item.quality).to eq (48)
+          expect(item.quality).to eq 48
         end
 
         it 'degrades twice as fast when past sell_in date' do
           item = Item.new("Conjured item", 0, 50)
           GildedRose.new([item]).update_quality
-          expect(item.quality).to eq (46)
+          expect(item.quality).to eq 46
         end
 
       end
