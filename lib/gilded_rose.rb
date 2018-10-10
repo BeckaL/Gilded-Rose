@@ -43,9 +43,7 @@ class GildedRose
   def sulfuras(item)
   end
 
-  def aged_brie(item)
-    item.sell_in < 0 ? item.quality += 2 : item.quality += 1
-  end
+
 
   def backstage_pass(item)
     item.quality += 1 if item.sell_in > 10
@@ -60,10 +58,6 @@ class GildedRose
 
   def conjured_item(item)
     item.sell_in < 0 ? item.quality -= 4 : item.quality -= 2
-  end
-
-  def aged_cheddar(item)
-    item.quality += 3 if item.sell_in < 0
   end
 
   def yulfuras(item)
