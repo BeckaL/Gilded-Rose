@@ -125,20 +125,7 @@ describe GildedRose do
           GildedRose.new([item]).update_quality
           expect(item.quality).to eq(50)
         end
-      end
 
-      context 'when item is conjured' do
-        it 'degrades to 48 when quality is at 50' do
-          item = Item.new("Conjured item", 5, 50)
-          GildedRose.new([item]).update_quality
-          expect(item.quality).to eq 48
-        end
-
-        it 'degrades twice as fast when past sell_in date' do
-          item = Item.new("Conjured item", 0, 50)
-          GildedRose.new([item]).update_quality
-          expect(item.quality).to eq 46
-        end
 
       end
 
@@ -154,6 +141,58 @@ describe GildedRose do
           GildedRose.new([item]).update_quality
           expect(item.quality).to eq(0)
         end
+      end
+    end
+
+    context 'when item is conjured' do
+      it 'degrades to 48 when quality is at 50' do
+        item = Item.new("Conjured item", 5, 50)
+        GildedRose.new([item]).update_quality
+        expect(item.quality).to eq 48
+      end
+
+      it 'degrades twice as fast when past sell_in date' do
+        item = Item.new("Conjured item", 0, 50)
+        GildedRose.new([item]).update_quality
+        expect(item.quality).to eq 46
+      end
+    end
+
+    context 'when item is Aged Cheddar' do
+      it 'improves in quality by 3 after its sell-in date' do
+        item = Item.new('Aged Cheddar', 0, 47)
+        GildedRose.new([item]).update_quality
+        expect(item.quality).to eq 50
+      end
+    end
+
+    context 'when item is Yulfuras' do
+
+      it 'never degrades' do
+        item = Item.new('Yulfuras, Foot of Zeus', 0, 50)
+        GildedRose.new([item]).update_quality
+        expect(item.quality).to eq 50
+      end
+
+      it 'doesn\'t degrade even when above 50' do
+        item = Item.new('Yulfuras, Foot of Zeus', 0, 80)
+        GildedRose.new([item]).update_quality
+        expect(item.quality).to eq 80
+      end
+    end
+
+    context 'when item is ultra conjured' do
+
+      it 'degrades three times as fast as normal items after sell_in' do
+        item = Item.new('Ultraconjured', 0, 50)
+        GildedRose.new([item]).update_quality
+        expect(item.quality).to eq 44
+      end
+
+      it 'degrades three times as fast as normal items before sell_in' do
+        item = Item.new('Ultraconjured', 1, 50)
+        GildedRose.new([item]).update_quality
+        expect(item.quality).to eq 47
       end
     end
   end

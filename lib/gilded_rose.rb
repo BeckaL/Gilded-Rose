@@ -26,12 +26,16 @@ class GildedRose
       when "Backstage passes to a TAFKAL80ETC concert"
         backstage_pass(item)
       when "Conjured item" then conjured_item(item)
+      when "Aged Cheddar" then aged_cheddar(item)
+      when 'Yulfuras, Foot of Zeus' then yulfuras(item)
+      when 'Ultraconjured' then ultraconjured(item)
       else other_items(item)
     end
   end
 
   def min_max_quality(item)
-    return if item.name == "Sulfuras, Hand of Ragnaros"
+    name = item.name
+    return if name == 'Sulfuras, Hand of Ragnaros' || name == 'Yulfuras, Foot of Zeus'
     item.quality = MIN_QUALITY if item.quality < MIN_QUALITY
     item.quality = MAX_QUALITY if item.quality > MAX_QUALITY
   end
@@ -56,6 +60,17 @@ class GildedRose
 
   def conjured_item(item)
     item.sell_in < 0 ? item.quality -= 4 : item.quality -= 2
+  end
+
+  def aged_cheddar(item)
+    item.quality += 3 if item.sell_in < 0
+  end
+
+  def yulfuras(item)
+  end
+
+  def ultraconjured(item)
+    item.sell_in < 0 ? item.quality -= 6 : item.quality -= 3
   end
 
 end
