@@ -1,4 +1,4 @@
-class Cheese
+class Pass
 
   attr_reader :quality, :sell_in
 
@@ -23,12 +23,11 @@ class Cheese
   end
 
   def update_quality
-    mature_degraders = {'Aged Brie' => 2, 'Aged Cheddar' => 3}
-    normal_degrader = 1
     multiplier = magic_multiplier
-    mature_degrader = mature_degraders[@type]
-    return @quality += normal_degrader * multiplier if @sell_in >= 0
-    @quality += mature_degrader * multiplier
+    @quality += 1 * multiplier if @sell_in > 10
+    @quality += 2 * multiplier if @sell_in.between?(6, 10)
+    @quality += 3 * multiplier if @sell_in.between?(0, 5)
+    @quality = 0 * multiplier if @sell_in < 0
   end
 
   def min_max_quality
